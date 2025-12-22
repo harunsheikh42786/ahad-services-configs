@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # AUTH-SERVICE routes - NO JWT CHECK
+            - id: AUTH-SERVICE
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/auth/**,/authenticate
+              # NO JWT FILTER - Public route
+
+            # USER-SERVICE routes - JWT PROTECTED
+            - id: USER-SERVICE
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/users/**
+             
+# JWT Configuration
+jwt:
+  secret: "mysecretkey123456789012345678901234"
+  access-token-ttl: "900000"      # 15 min (ms)
+  refresh-token-ttl: "604800000"  # 7 days (ms)
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+# Logging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.ahad.gateway.filter: DEBUG
+
+# App info
+info:
+  app:
+    name: API-GATEWAY
+    version: 1.0.0
