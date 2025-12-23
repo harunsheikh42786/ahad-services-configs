@@ -6,20 +6,20 @@ spring:
     name: API-GATEWAY
   cloud:
     gateway:
-      server:
-        routes:
-          # AUTH-SERVICE routes - NO JWT CHECK
-          - id: AUTH-SERVICE
-            uri: lb://AUTH-SERVICE
-            predicates:
-              - Path=/auth/**,/authenticate
-            # NO JWT FILTER - Public route
+      routes:
 
-          # USER-SERVICE routes - JWT PROTECTED
-          - id: USER-SERVICE
-            uri: lb://USER-SERVICE
-            predicates:
-              - Path=/users/**
+        # AUTH-SERVICE (PUBLIC)
+        - id: AUTH-SERVICE
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**,/authenticate
+
+        # USER-SERVICE (PROTECTED)
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+
              
 # JWT Configuration
 jwt:
