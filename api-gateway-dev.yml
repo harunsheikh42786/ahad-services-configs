@@ -20,6 +20,12 @@ spring:
           predicates:
             - Path=/users/**
 
+        # SHOP-SERVICE (PROTECTED)
+        - id: SHOP-SERVICE
+          uri: lb://SHOP-SERVICE
+          predicates:
+            - Path=/shops/**
+
              
 # JWT Configuration
 jwt:
