@@ -18,7 +18,7 @@ spring:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/users/**, /addresses/**
 
         # SHOP-SERVICE (PROTECTED)
         - id: SHOP-SERVICE
