@@ -25,6 +25,12 @@ spring:
           uri: lb://SHOP-SERVICE
           predicates:
             - Path=/shops/**
+            
+        # Media-SERVICE (BOTH)
+        - id: MEDIA-SERVICE
+          uri: lb://MEDIA-SERVICE
+          predicates:
+            - Path=/media/**
 
              
 # JWT Configuration
