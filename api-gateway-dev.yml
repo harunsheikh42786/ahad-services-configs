@@ -26,6 +26,12 @@ spring:
           predicates:
             - Path=/shops/**
             
+        # POST-SERVICE (BOTH)
+        - id: POST-SERVICE
+          uri: lb://POST-SERVICE
+          predicates:
+            - Path=/posts/**
+            
         # Media-SERVICE (BOTH)
         - id: MEDIA-SERVICE
           uri: lb://MEDIA-SERVICE
