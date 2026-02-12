@@ -32,6 +32,12 @@ spring:
           predicates:
             - Path=/posts/**
             
+        # PROFILE-SERVICE (BOTH)
+        - id: PROFILE-SERVICE
+          uri: lb://PROFILE-SERVICE
+          predicates:
+            - Path=/user-info/**
+
         # Media-SERVICE (BOTH)
         - id: MEDIA-SERVICE
           uri: lb://MEDIA-SERVICE
