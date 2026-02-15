@@ -37,8 +37,6 @@ spring:
           uri: lb://PROFILE-SERVICE
           predicates:
             - Path=/user-info/internal/**
-          filters:
-            - StripPrefix=1
             # internal auth skip karna
         
         # Public / user endpoints normal
