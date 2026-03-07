@@ -21,10 +21,10 @@ spring:
             - Path=/users/**, /addresses/**
 
         # SHOP-SERVICE (PROTECTED)
-        - id: SHOP-SERVICE
-          uri: lb://SHOP-SERVICE
+        - id: BUSINESS-SERVICE
+          uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/shops/**
+            - Path=/business/**
             
         # POST-SERVICE (BOTH)
         - id: POST-SERVICE
