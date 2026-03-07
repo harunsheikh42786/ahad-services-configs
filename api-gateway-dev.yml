@@ -20,7 +20,7 @@ spring:
           predicates:
             - Path=/users/**, /addresses/**
 
-        # SHOP-SERVICE (PROTECTED)
+        # BUINESS-SERVICE (PROTECTED)
         - id: BUSINESS-SERVICE
           uri: lb://BUSINESS-SERVICE
           predicates:
