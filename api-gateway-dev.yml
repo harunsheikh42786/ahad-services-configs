@@ -45,6 +45,12 @@ spring:
           predicates:
             - Path=/user-info/**, !/user-info/internal/**
 
+        # Public / user endpoints normal
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/products/**
+
 
         # Media-SERVICE (BOTH)
         - id: MEDIA-SERVICE
