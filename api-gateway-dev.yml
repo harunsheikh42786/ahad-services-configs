@@ -65,8 +65,8 @@ spring:
             - Path=/social-graph/**
 
          # Notification-SERVICE (BOTH)
-        - id: NOTIFICATION-GRAPH-SERVICE
-          uri: lb://NOTIFICATION-GRAPH-SERVICE
+        - id: NOTIFICATION-SERVICE
+          uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/notifications/**
 
