@@ -58,11 +58,17 @@ spring:
           predicates:
             - Path=/media/**
 
-         # Media-SERVICE (BOTH)
+         # Social-SERVICE (BOTH)
         - id: SOCIAL-GRAPH-SERVICE
           uri: lb://SOCIAL-GRAPH-SERVICE
           predicates:
             - Path=/social-graph/**
+
+         # Notification-SERVICE (BOTH)
+        - id: NOTIFICATION-GRAPH-SERVICE
+          uri: lb://NOTIFICATION-GRAPH-SERVICE
+          predicates:
+            - Path=/notifications/**
 
              
 # JWT Configuration
