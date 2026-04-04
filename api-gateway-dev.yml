@@ -64,6 +64,13 @@ spring:
           predicates:
             - Path=/social-graph/**
 
+        
+         # CHAT-SERVICE (BOTH)
+        - id: CHAT-SERVICE
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/chats/**
+
          # Notification-SERVICE (BOTH)
         - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
