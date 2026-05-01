@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8080
 
 spring:
@@ -7,98 +7,108 @@ spring:
   cloud:
     gateway:
       routes:
-
-        # AUTH-SERVICE (PUBLIC)
         - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:
-            - Path=/auth/**,/authenticate
+            - Path=/api/v1/auth/**
+          filters:
+            - RewritePath=/api/v1/auth/?(?<segment>.*), /auth/${segment}
 
-        # USER-SERVICE (PROTECTED)
+        - id: BFF-SERVICE-APP
+          uri: lb://BFF-SERVICE
+          predicates:
+            - Path=/api/v1/app/**
+          filters:
+            - RewritePath=/api/v1/app/?(?<segment>.*), /${segment}
+
+        - id: BFF-SERVICE-PUBLIC
+          uri: lb://BFF-SERVICE
+          predicates:
+            - Path=/api/v1/public/**
+          filters:
+            - RewritePath=/api/v1/public/?(?<segment>.*), /${segment}
+
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/users/**, /addresses/**
+            - Path=/api/v1/users/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-        # BUINESS-SERVICE (PROTECTED)
+        - id: USER-PORTFOLIO-SERVICE
+          uri: lb://USER-PORTFOLIO-SERVICE
+          predicates:
+            - Path=/api/v1/user-info/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
+
         - id: BUSINESS-SERVICE
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business/**
-            
-        # POST-SERVICE (BOTH)
+            - Path=/api/v1/business/**,/api/v1/businesses/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
+
         - id: POST-SERVICE
           uri: lb://POST-SERVICE
           predicates:
-            - Path=/posts/**
-            
-       # Internal calls bypass
-        - id: PROFILE-SERVICE-INTERNAL
-          uri: lb://PROFILE-SERVICE
-          predicates:
-            - Path=/user-info/internal/**
-            # internal auth skip karna
-        
-        # Public / user endpoints normal
-        - id: PROFILE-SERVICE
-          uri: lb://PROFILE-SERVICE
-          predicates:
-            - Path=/user-info/**, !/user-info/internal/**
+            - Path=/api/v1/posts/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-        # Public / user endpoints normal
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
-            - Path=/products/**
+            - Path=/api/v1/products/**,/api/v1/drafts/**,/api/v1/files/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-
-        # Media-SERVICE (BOTH)
         - id: MEDIA-SERVICE
           uri: lb://MEDIA-SERVICE
           predicates:
-            - Path=/media/**
+            - Path=/api/v1/media/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-         # Social-SERVICE (BOTH)
         - id: SOCIAL-GRAPH-SERVICE
           uri: lb://SOCIAL-GRAPH-SERVICE
           predicates:
-            - Path=/social-graph/**
+            - Path=/api/v1/social-graph/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-        
-         # CHAT-SERVICE (BOTH)
         - id: CHAT-SERVICE
           uri: lb://CHAT-SERVICE
           predicates:
-            - Path=/chats/**
+            - Path=/api/v1/chats/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-         # Notification-SERVICE (BOTH)
         - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
           predicates:
-            - Path=/notifications/**
+            - Path=/api/v1/notifications/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
-             
-# JWT Configuration
 jwt:
   secret: "mysecretkey123456789012345678901234"
-  access-token-ttl: "900000"      # 15 min (ms)
-  refresh-token-ttl: "604800000"  # 7 days (ms)
+  access-token-ttl: "900000"
+  refresh-token-ttl: "604800000"
 
-# Management endpoints
 management:
   endpoints:
     web:
       exposure:
         include: health,info,metrics
 
-# Logging
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     com.ahad.gateway.filter: DEBUG
 
-# App info
 info:
   app:
     name: API-GATEWAY
     version: 1.0.0
+
