@@ -1,4 +1,4 @@
-﻿server:
+server:
   port: 8080
 
 spring:
@@ -91,6 +91,17 @@ spring:
           filters:
             - RewritePath=/api/v1/(?<segment>.*), /${segment}
 
+eureka:
+  client:
+    enabled: true
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
 jwt:
   secret: "mysecretkey123456789012345678901234"
   access-token-ttl: "900000"
@@ -111,4 +122,3 @@ info:
   app:
     name: API-GATEWAY
     version: 1.0.0
-
