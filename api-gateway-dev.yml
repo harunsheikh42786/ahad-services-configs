@@ -14,8 +14,8 @@ spring:
           # filters:
           #   - RewritePath=/api/v1/auth/?(?<segment>.*), /auth/${segment}
 
-        - id: AUTH-SERVICE
-          uri: lb://AUTH-SERVICE
+        - id: WORKSPACE-SERVICE
+          uri: lb://WORKSPACE-SERVICE
           predicates:
             - Path=/api/v1/internal/workspaces/**, /api/v1//internal/profiles/**, /api/v1/internal/memberships/**
           # filters:
